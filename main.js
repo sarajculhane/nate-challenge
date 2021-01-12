@@ -40,20 +40,39 @@ const page = async () => {
         }
 
         // page two
+
         const selectClick= '.custom-select-trigger'
         
         try {
             const val = '#content-section > div > div > div > span:nth-child(1)'
             await page.waitForTimeout(15000)
-            await page.click(selectClick)
-            // await page.select('.custom-option', 'London')
-            // await page.click(val)
+
+            
+            await page.click(selectClick).then(() => console.log('city clicked'))
+            
+
+            const getSelector = await page.evaluate( () => {
+                let child;
+                const options = [...document.querySelectorAll('.custom-option')]
+
+                for(let i = 0; i < options.length; i++) {
+                    if(options[i].innerHTML.toLowerCase() === 'london') child = i+1
+                    // console.log(city.getAttribute('data-value'), city.innerHTML.toLowerCase() === 'london')
+                }
+                
+                return `#content-section > div > div > div > span:nth-child(${child})`
+            })
+
+            await page.waitForTimeout(4000)
+            await page.click(getSelector).then(() => console.log('london clicked'))
+            await page.click('#next-page-btn')
+            
         } catch(err) {
             console.log(err, 'select error')
         }
         
     }
-
+    
 
     
 
