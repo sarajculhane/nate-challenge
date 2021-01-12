@@ -9,6 +9,8 @@ const dictObj =
     gender: "female"
 }
 
+
+
 const page = async () => {
     const browser = await puppeteer.launch({headless: false});
     
@@ -19,11 +21,6 @@ const page = async () => {
     // page one
 
     await page.goto('https://nate-eu-west-1-prediction-test-webpages.s3-eu-west-1.amazonaws.com/tech-challenge/page1.html');
-    // const button = await page.evaluate(() => {
-    //     let btn = document.getElementsByTagName('button')
-    //     return btn
-    // })
-    // console.log(button)
     const pageOneBeforeClick = await page.content()
     // button.addEventListener('click', (e) => { 
     //     e.setAttribute("nate-action-type", "click")
@@ -32,7 +29,8 @@ const page = async () => {
     if(page.$(buttonSelector)) {
         try{
 
-            await page.click(buttonSelector).then(() => page.evaluate(() => document.querySelector('.custom-select-trigger').setAttribute('nate-action-type', 'click')))
+            await page.click(buttonSelector)
+            // .then(() => page.evaluate(() => document.querySelector('input[type=button]').setAttribute('nate-action-type', 'click')))
                 
         } catch(err) {
             console.log('the error', err)
@@ -72,21 +70,35 @@ const page = async () => {
 
             
             }))
-            // await page.click('#next-page-btn')
-            
+            await page.click('#next-page-btn')
         } catch(err) {
             console.log(err, 'select error')
         }
         
     }
     
-
-    
-
-
-    // await page.evaluate(() => {
-    //     console.log(document.querySelector('button'))
-    // })
+    // page 3
+    await page.waitForSelector('#name')
+    // await page.type('#name', 'Sara', {delay: 500})
+const dictObj = {
+    city: "london",
+    name: "nate", 
+    password: "07000000000", 
+    email: "nate@nate.tech", 
+    gender: "female"
+}
+    const completeForm = async (dict) => {
+        try{
+            await page.type('#name', 'Sara', {delay: 500})
+            await page.type('#pwd', 'Saraf2erwfd', {delay: 500})
+            await page.type('#phone', '15555555555')
+            await page.type('#email', 'nate@nat.com', {delay: 500})
+        } catch(err) {
+            console.log('form err', err)
+        }
+    }
+    completeForm()
 }
 
 page()
+
