@@ -3,6 +3,14 @@ const fs = require('fs')
 
 const app = async () => {
 
+    const dictObj = {
+        city: "london",
+        name: "nate", 
+        password: "07000000000", 
+        email: "nate@nate.tech", 
+        gender: "female"
+    }
+
     // Launch Chrome/Chromium instance with Puppeteer and go to page one
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
@@ -25,7 +33,7 @@ const app = async () => {
             
             /*
             Since we must add the `nate-action-type` attribute and log the post execution html, 
-            we do not want to the redirect to page 2 to occur until after these two things have happened. Thus I have done the following i this block:
+            we do not want to the redirect to page 2 to occur until after these two things have happened. The following changes prevent this:
 
             - Remove the onclick attribute on the button
             - Add an event listener that changes the button's onclick attribute on mouseover 
@@ -118,13 +126,7 @@ const app = async () => {
     }))
 
     await page.waitForSelector('#name') // wait for form selector to appear
-    const dictObj = {
-        city: "london",
-        name: "nate", 
-        password: "07000000000", 
-        email: "nate@nate.tech", 
-        gender: "female"
-    }
+
     fs.writeFileSync('logs/before/page3.html', await page.content())
 
     // Complete Form Function will fill out the form with the data from the dictionary object
@@ -135,16 +137,42 @@ const app = async () => {
     */
     const completeForm = async (dict) => {
         try{
-            await page.type('#name', dict.name, {delay: 500}).then(() => page.evaluate(() => 
+            await page.type('#name', dict.name, {delay: 100}).then(() => page.evaluate(() => 
             {
             document.querySelector('#name').setAttribute('nate-action-type', 'input')
-            // name.setAttribute('nate-dic-key', 'name')
+            document.querySelector('#name').setAttribute('nate-dic-key', 'name')
         }))
             
-            await page.type('#pwd', dict.password, {delay: 500})
-            await page.type('#phone', '15555555555')
-            await page.type('#email', dict.email, {delay: 500})
+            await page.type('#pwd', dict.password, {delay: 100}).then(() => page.evaluate(() => 
+            {
+            document.querySelector('#pwd').setAttribute('nate-action-type', 'input')
+            document.querySelector('#pwd').setAttribute('nate-dic-key', 'password')
+        }))
+            await page.type('#phone', '15555555555').then(() => page.evaluate(() => 
+            {
+            document.querySelector('#phone').setAttribute('nate-action-type', 'input')
+            document.querySelector('#phone').setAttribute('nate-dic-key', 'phone')
+        }))
+            await page.type('#email', dict.email, {delay: 100}).then(() => page.evaluate(() => 
+            {
+            document.querySelector('#email').setAttribute('nate-action-type', 'input')
+            document.querySelector('#email').setAttribute('nate-dic-key', 'email')
+        }))
+            
+        await page.evaluate((dict) => {
+                const checkboxes = [...document.querySelectorAll('input[class=form-check]')]
+                for(let box of checkboxes) {
+                    if(!box.checked && box.value === dict.gender) box.checked = true
+                    if(box.checked && box.value !== dict.gender) box.checked = false
+                }
+            }, dict).then(() => page.evaluate(() => document.querySelector('input[class=form-check]').setAttribute('nate-action-type', 'checked')))
 
+ 
+        fs.writeFileSync('logs/after/page3.html', await page.content())
+        await page.click('#btn').then(() => page.evaluate(() => document.querySelector('#bth')))
+
+
+  
 
             /*
              For the gender field, we need to both ensure that the correct box is checked AND that the incorrect is not
@@ -153,15 +181,7 @@ const app = async () => {
              After that, we use page.evaluate again to set the attributes on the .form-check class
             */
 
-            await page.evaluate((dict) => {
-                const checkboxes = [...document.querySelectorAll('input[class=form-check]')]
-                for(let box of checkboxes) {
-                    if(!box.checked && box.value === 'female') box.checked = true
-                    if(box.checked && box.value !== 'female') box.checked = false
-                }
-            }).then(() => page.evaluate(() => document.querySelector('input[class=form-check]').setAttribute('nate-action-type', 'checked')))
-            fs.writeFileSync('logs/after/page3.html', await page.content())
-            await page.click('#btn').then(() => page.evaluate(() => document.querySelector('#bth')))
+
 
         } catch(err) {
             console.log('form err', err)
@@ -183,3 +203,14 @@ Notes
 - Simplify / modulate code where possible
 
 */
+
+  //       Object.keys(dict).filter((key) => key !== 'gender' && key!=='password' ).forEach(async (key) => 
+    //       {await page.type(`#${key}`, dict[key], {delay: 500})
+          
+    //         await page.evaluate((key) => 
+    //         {
+    //         console.log(key)
+    //         document.querySelector(`#${key}`).setAttribute('nate-action-type', 'input')
+    //         document.querySelector(`#${key}`).setAttribute('nate-dic-key', `${key}`)
+    //     })
+    // })
