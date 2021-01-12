@@ -1,16 +1,5 @@
 const puppeteer = require('puppeteer');
 
-const dictObj = 
-{
-    city: "london",
-    name: "nate", 
-    password: "07000000000", 
-    email: "nate@nate.tech", 
-    gender: "female"
-}
-
-
-
 const page = async () => {
     const browser = await puppeteer.launch({headless: false});
     
@@ -22,15 +11,12 @@ const page = async () => {
 
     await page.goto('https://nate-eu-west-1-prediction-test-webpages.s3-eu-west-1.amazonaws.com/tech-challenge/page1.html');
     const pageOneBeforeClick = await page.content()
-    // button.addEventListener('click', (e) => { 
-    //     e.setAttribute("nate-action-type", "click")
-    //     console.log('done')
-    // })
+
     if(page.$(buttonSelector)) {
         try{
 
             await page.click(buttonSelector)
-            // .then(() => page.evaluate(() => document.querySelector('input[type=button]').setAttribute('nate-action-type', 'click')))
+            .then(() => page.evaluate(() => document.querySelector(buttonSelector).setAttribute('nate-action-type', 'click')))
                 
         } catch(err) {
             console.log('the error', err)
@@ -55,7 +41,7 @@ const page = async () => {
 
                 for(let i = 0; i < options.length; i++) {
                     if(options[i].innerHTML.toLowerCase() === 'london') child = i+1
-                    // console.log(city.getAttribute('data-value'), city.innerHTML.toLowerCase() === 'london')
+    
                 }
                 
                 return `#content-section > div > div > div > span:nth-child(${child})`
@@ -78,26 +64,40 @@ const page = async () => {
     }
     
     // page 3
+
+    await page.waitForSelector('#popup').then(() => page.evaluate(() => {
+        let popup = document.getElementById('popup')
+        popup.style.display = 'none'
+    }))
+
     await page.waitForSelector('#name')
-    // await page.type('#name', 'Sara', {delay: 500})
-const dictObj = {
-    city: "london",
-    name: "nate", 
-    password: "07000000000", 
-    email: "nate@nate.tech", 
-    gender: "female"
-}
+    const dictObj = {
+        city: "london",
+        name: "nate", 
+        password: "07000000000", 
+        email: "nate@nate.tech", 
+        gender: "female"
+    }
     const completeForm = async (dict) => {
         try{
-            await page.type('#name', 'Sara', {delay: 500})
-            await page.type('#pwd', 'Saraf2erwfd', {delay: 500})
+            await page.type('#name', dict.name, {delay: 500})
+            await page.type('#pwd', dict.password, {delay: 500})
             await page.type('#phone', '15555555555')
-            await page.type('#email', 'nate@nat.com', {delay: 500})
+            await page.type('#email', dict.email, {delay: 500})
+
+            await page.evaluate((dict) => {
+                const checkboxes = [...document.querySelectorAll('input[class=form-check]')]
+                for(let box of checkboxes) {
+                    if(!box.checked && box.value === 'female') box.checked = true
+                    if(box.checked && box.value !== 'female') box.checked = false
+                }
+            })
+
         } catch(err) {
             console.log('form err', err)
         }
     }
-    completeForm()
+    completeForm(dictObj)
 }
 
 page()
