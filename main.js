@@ -16,7 +16,6 @@ const page = async () => {
     const buttonSelector = 'input[type=button]'
     await page.waitForTimeout(1000)
     
-
     // page one
 
     await page.goto('https://nate-eu-west-1-prediction-test-webpages.s3-eu-west-1.amazonaws.com/tech-challenge/page1.html');
@@ -33,7 +32,7 @@ const page = async () => {
     if(page.$(buttonSelector)) {
         try{
 
-            await page.click(buttonSelector)
+            await page.click(buttonSelector).then(() => page.evaluate(() => document.querySelector('.custom-select-trigger').setAttribute('nate-action-type', 'click')))
                 
         } catch(err) {
             console.log('the error', err)
@@ -48,7 +47,8 @@ const page = async () => {
             await page.waitForTimeout(15000)
 
             
-            await page.click(selectClick).then(() => console.log('city clicked'))
+            await page.click(selectClick).then(() => page.evaluate(() => document.querySelector('.custom-select-trigger').setAttribute('nate-action-type', 'click')))
+            
             
 
             const getSelector = await page.evaluate( () => {
@@ -64,8 +64,15 @@ const page = async () => {
             })
 
             await page.waitForTimeout(4000)
-            await page.click(getSelector).then(() => console.log('london clicked'))
-            await page.click('#next-page-btn')
+
+            await page.click(getSelector).then((e) => console.log('london clicked')).then(() => page.evaluate(() => {
+                let selector = document.querySelector('.custom-select-trigger')
+                selector.setAttribute('nate-action-type', 'click')
+                selector.setAttribute('nate-dic-key', 'city')
+
+            
+            }))
+            // await page.click('#next-page-btn')
             
         } catch(err) {
             console.log(err, 'select error')
