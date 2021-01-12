@@ -93,6 +93,8 @@ const page = async () => {
                 }
             })
 
+            await page.click('#btn')
+
         } catch(err) {
             console.log('form err', err)
         }
