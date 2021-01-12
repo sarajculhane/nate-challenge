@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="en"><head>
+  <title>Page 3</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script type="text/javascript" src="./lib/index.js"></script>
+</head>
+
+<body>
+  <h1>Page 3</h1>
+  <div id="popup" style="display: none;">
+    <section>
+      <h2>Popup time
+        </h2><h2>
+        <input type="button" onclick="document.getElementById('popup').hidden = true;" value="X">
+    </h2></section>
+    <img src="https://media.giphy.com/media/dwmNhd5H7YAz6/giphy.gif">
+  </div>
+  <section class="register-body">
+    <div class="container d-flex justify-content-center py-5">
+      <form class="col-md-8" method="post" onsubmit="return false">
+        <p class="col-12 pb-md-4 px-0">
+        </p>
+        <div class="form-group my-4 row">
+          <label class="col-sm-2 col-form-label px-2">Name <span class="required-text">*</span></label>
+          <div class="col-sm-10">
+            <input type="text" id="name" class="form-control">
+            <p id="name_message" class="text-danger m-0"></p>
+          </div>
+        </div>
+        <div class="form-group my-4 row">
+          <label class="col-sm-2 col-form-label px-2">Password <span class="required-text">*</span></label>
+          <div class="col-sm-10">
+            <input type="password" id="pwd" class="form-control">
+            <p id="pwd_message" class="text-danger m-0"></p>
+          </div>
+        </div>
+        <div class="form-group my-4 row">
+          <label class="col-sm-2 col-form-label px-2">Phone <span class="required-text">*</span></label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" onkeypress="javascript:return isNumber(event)">
+            <p id="phone_message" class="text-danger m-0"></p>
+          </div>
+        </div>
+        <div class="form-group my-4 row">
+          <label class="col-sm-2 col-form-label px-2">Email <span class="required-text">*</span></label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="email">
+            <p id="email_message" class="text-danger m-0"></p>
+          </div>
+        </div>
+        <div class="form-group my-4 row">
+          <label class="col-sm-4 col-form-label">Gender <span class="required-text">*</span></label>
+          <div class="col-sm-8 choice1">
+            <div class="form-check form-check-inline">
+              <input class="form-check" checked="" type="checkbox" id="defaultCheck1" value="male" nate-action-type="checked">
+              <label class="form-check-label" for="defaultCheck1" style="color: #8B8B8B">Male</label>
+            </div>
+            <div class="form-check form-check-inline ml-5">
+              <input class="form-check" type="checkbox" id="defaultCheck2" value="female">
+              <label class="form-check-label" for="defaultCheck2" style="color: #8B8B8B">Female</label>
+            </div>
+            <p id="check_message" class="text-danger m-0"></p>
+          </div>
+        </div>
+
+    </form></div>
+    <p class="text-center pb-4 feedback-body mt-5">
+      <button class="py-3 px-5" type="submit" id="btn" onclick="submitRegisterForm()">Submit
+        Application</button>
+    </p>
+    
+
+    
+  </section>
+  <script>
+    setTimeout(() => {
+      if (Date.now() % 2 == 0) {
+        document.getElementById('popup').hidden = false;
+      }
+    }, Math.floor((Math.random() * 5) + 1) * 1000);
+
+    var emailRegex = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    var nameregex = /^[a-zA-Z ]*$/;
+    function submitRegisterForm() {
+      var name = $("#name").val();
+      var pwd = $("#pwd").val();
+      var email = $.trim($("#email").val());
+      var phone = $.trim($("#phone").val());
+
+      $("#name_message").html(" ");
+      $("#pwd_message").html(" ");
+      $("#email_message").html(" ");
+      $("#phone_message").html(" ");
+      $("#upload-input").html(" ");
+
+      if (name.trim() == "") {
+        $("#name").focus();
+        $("#name_message").html("Enter your name!");
+        return false;
+      } else if (!name.match(nameregex)) {
+        $("#name").focus();
+        $("#name_message").html("Name can only contain alphabets!");
+        return false;
+      } else if (pwd.trim() == "") {
+        $("#pwd").focus();
+        $("#pwd_message").html("Enter password!");
+        return false;
+      } else if (phone.trim() == "") {
+        $("#phone").focus();
+        $("#phone_message").html("Enter your phone number!");
+        return false;
+      } else if (email.trim() == "") {
+        $("#email").focus();
+        $("#email_message").html("Enter your email!");
+        return false;
+      } else if (!email.match(emailRegex)) {
+        $("#email").focus();
+        $("#email_message").html("Enter a valid email");
+        return false;
+      } else if ($("#defaultCheck1").prop('checked') == false && $("#defaultCheck2").prop('checked') == false) {
+        $("#check_message").html("Please select one value");
+        $("#defaultCheck1").focus();
+        return false;
+      }
+      location.href = './page4.html';
+    }
+  </script>
+  <script>
+    $('input.form-check').on('change', function () {
+      $('input.form-check').not(this).prop('checked', false);
+    });
+    function getFileName() {
+      var x = document.getElementById('upload-input')
+      document.getElementById('fileName').innerHTML = x.value.split('\\').pop()
+    }
+    function isNumber(evt) {
+      var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+      if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+        return false;
+
+      return true;
+    } 
+  </script>
+
+
+</body></html>

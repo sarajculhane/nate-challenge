@@ -1,35 +1,55 @@
 const puppeteer = require('puppeteer');
+const fs = require('fs')
 
-const page = async () => {
+const app = async () => {
     const browser = await puppeteer.launch({headless: false});
     
     const page = await browser.newPage();
     const buttonSelector = 'input[type=button]'
-    await page.waitForTimeout(1000)
     
     // page one
 
     await page.goto('https://nate-eu-west-1-prediction-test-webpages.s3-eu-west-1.amazonaws.com/tech-challenge/page1.html');
-    const pageOneBeforeClick = await page.content()
+    await page.waitForTimeout(1000)
+    fs.writeFileSync('logs/before/page1.html', await page.content())
 
-    if(page.$(buttonSelector)) {
+
         try{
+            
 
+            await page.waitForSelector(buttonSelector).then(() => page.evaluate(() => {
+                let button = document.querySelector('input[type=button]')
+                button.removeAttribute('onclick')
+                button.addEventListener('mouseover', () =>  {
+                    
+                    button.setAttribute('nate-action-type', 'click')
+                    console.log(document.querySelectorAll('*'), 'done')
+                    button.setAttribute('onclick', "location.href='./page2.html'")
+                    
+                }
+                )
+            }))
+            // await page.waitForTimeout(5000)
+            // await page.waitForSelector(buttonSelector)
+            await page.hover(buttonSelector)
+            fs.writeFileSync('logs/after/page1.html', await page.content())
+            await page.waitForTimeout(3000)
             await page.click(buttonSelector)
-            .then(() => page.evaluate(() => document.querySelector(buttonSelector).setAttribute('nate-action-type', 'click')))
-                
+            
+            fs.writeFileSync('logs/after/page1.html', await page.content())
+            // await page.evaluate(() => document.querySelector(buttonSelector).setAttribute('nate-action-type', 'click'))
+            
         } catch(err) {
             console.log('the error', err)
         }
-
+        
         // page two
 
         const selectClick= '.custom-select-trigger'
-        
         try {
-            const val = '#content-section > div > div > div > span:nth-child(1)'
+            
             await page.waitForTimeout(15000)
-
+            fs.writeFileSync('logs/before/page2.html', await page.content())
             
             await page.click(selectClick).then(() => page.evaluate(() => document.querySelector('.custom-select-trigger').setAttribute('nate-action-type', 'click')))
             
@@ -48,7 +68,7 @@ const page = async () => {
             })
 
             await page.waitForTimeout(4000)
-
+            
             await page.click(getSelector).then((e) => console.log('london clicked')).then(() => page.evaluate(() => {
                 let selector = document.querySelector('.custom-select-trigger')
                 selector.setAttribute('nate-action-type', 'click')
@@ -56,12 +76,13 @@ const page = async () => {
 
             
             }))
+            fs.writeFileSync('logs/after/page2.html', await page.content())
             await page.click('#next-page-btn')
         } catch(err) {
             console.log(err, 'select error')
         }
         
-    }
+
     
     // page 3
 
@@ -78,6 +99,7 @@ const page = async () => {
         email: "nate@nate.tech", 
         gender: "female"
     }
+    fs.writeFileSync('logs/before/page3.html', await page.content())
     const completeForm = async (dict) => {
         try{
             await page.type('#name', dict.name, {delay: 500})
@@ -91,16 +113,27 @@ const page = async () => {
                     if(!box.checked && box.value === 'female') box.checked = true
                     if(box.checked && box.value !== 'female') box.checked = false
                 }
-            })
-
-            await page.click('#btn')
+            }).then(() => page.evaluate(() => document.querySelector('input[class=form-check]').setAttribute('nate-action-type', 'checked')))
+            fs.writeFileSync('logs/after/page3.html', await page.content())
+            await page.click('#btn').then(() => page.evaluate(() => document.querySelector('#bth').setAttribute('nate-action-type', 'click')))
 
         } catch(err) {
             console.log('form err', err)
         }
     }
     completeForm(dictObj)
+
 }
 
-page()
+app()
 
+/*
+Notes
+
+- Need to figure out how to set attribute with click on the submit
+- Make sure to append all keys to the respective elements
+- Add comments into code
+- Valid with different values
+- Simplify / modulate code where possible
+
+*/

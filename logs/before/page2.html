@@ -1,0 +1,83 @@
+<html><head>
+    <title>Page 2</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script type="text/javascript" src="./lib/jquery.js"></script>
+    <script type="text/javascript" src="./lib/index.js"></script>
+</head>
+
+<body>
+
+    <h1>Page 2</h1>
+    <section id="time-container"><span>milliseconds since 1 January 1970: 1610479742508</span></section>
+    <section id="loading-msg" hidden="">Loading...</section>
+    <section id="content-section">
+        <input type="button" id="next-page-btn" onclick="location.href='./page3.html'" value="Next page" disabled="">
+        <div class="custom-select-wrapper"><select name="sources" id="sources" class="custom-select" style="display: none;">
+            <option value="London">London</option>
+            <option value="New YorkS">Amsterdam</option>
+            <option value="New York">New York</option>
+        </select><div class="custom-select"><span class="custom-select-trigger">City</span><div class="custom-options"><span class="custom-option undefined" data-value="London">London</span><span class="custom-option undefined" data-value="New YorkS">Amsterdam</span><span class="custom-option undefined" data-value="New York">New York</span></div></div></div>
+    </section>
+    <script>
+        updateTime();
+        function updateTime() {
+            const container = document.getElementById('time-container');
+            const spanNode = document.createElement('span');
+            spanNode.innerText = `milliseconds since 1 January 1970: ${Date.now()}`;
+            container.childNodes.forEach(node => container.removeChild(node))
+            container.appendChild(spanNode);
+        }
+        setInterval(updateTime, 1);
+        setTimeout(() => {
+            document.getElementById('content-section').hidden = false;
+            document.getElementById('loading-msg').hidden = true;
+        }, Math.floor((Math.random() * 10) + 3) * 1000);
+
+        $('#sbt_set_textbox_text').on("click", function () {
+
+            $('label[for=first_name]').text('MY CUSTOM LABEL TEXT');
+
+            return false;
+
+        });
+        $(".custom-select").each(function () {
+            var classes = $(this).attr("class"),
+                id = $(this).attr("id"),
+                name = $(this).attr("name");
+            var template = '<div class="' + classes + '">';
+            template += '<span class="custom-select-trigger">City</span>';
+            template += '<div class="custom-options">';
+            $(this).find("option").each(function () {
+                template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
+            });
+            template += '</div></div>';
+
+            $(this).wrap('<div class="custom-select-wrapper"></div>');
+            $(this).hide();
+            $(this).after(template);
+        });
+        $(".custom-option:first-of-type").hover(function () {
+            $(this).parents(".custom-options").addClass("option-hover");
+        }, function () {
+            $(this).parents(".custom-options").removeClass("option-hover");
+        });
+        $(".custom-select-trigger").on("click", function () {
+            $('html').one('click', function () {
+                $(".custom-select").removeClass("opened");
+            });
+            $(this).parents(".custom-select").toggleClass("opened");
+            event.stopPropagation();
+        });
+        $(".custom-option").on("click", function () {
+            $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
+            $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
+            $(this).addClass("selection");
+            $(this).parents(".custom-select").removeClass("opened");
+            $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
+            $("#next-page-btn").prop('disabled', false);
+        });
+    </script>
+
+    
+
+</body></html>
