@@ -18,26 +18,33 @@ const app = async () => {
             
 
             await page.waitForSelector(buttonSelector).then(() => page.evaluate(() => {
+            try {  
                 let button = document.querySelector('input[type=button]')
                 button.removeAttribute('onclick')
                 button.addEventListener('mouseover', () =>  {
-                    
-                    button.setAttribute('nate-action-type', 'click')
-                    console.log(document.querySelectorAll('*'), 'done')
-                    button.setAttribute('onclick', "location.href='./page2.html'")
+                    const onClick = () => {
+                        button.setAttribute('nate-action-type', 'click')
+                        button.setAttribute('onclick', "location.href='./page2.html'")
+                        console.log([...document.querySelectorAll('*')])
+                        setTimeout(() => location.href='./page2.html', 5000)
+                        
+                        
+                    }  
+                    button.onclick =  () => onClick();
                     
                 }
                 )
+            } catch(err) {
+                console.log(err, 'from the event listener')
+            }
             }))
             // await page.waitForTimeout(5000)
             // await page.waitForSelector(buttonSelector)
             await page.hover(buttonSelector)
-            fs.writeFileSync('logs/after/page1.html', await page.content())
-            await page.waitForTimeout(3000)
-            await page.click(buttonSelector)
+            // fs.writeFileSync('logs/after/page1.html', await page.content())
             
-            fs.writeFileSync('logs/after/page1.html', await page.content())
-            // await page.evaluate(() => document.querySelector(buttonSelector).setAttribute('nate-action-type', 'click'))
+             await page.click(buttonSelector) 
+             fs.writeFileSync('logs/after/page1.html', await page.content())
             
         } catch(err) {
             console.log('the error', err)
