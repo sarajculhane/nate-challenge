@@ -84,19 +84,19 @@ const app = async () => {
             await page.click(selectClick).then(() => page.evaluate(() => document.querySelector('.custom-select-trigger').setAttribute('nate-action-type', 'click')))
             
             
-            // Given that there are multiple choices for cities, we need to determine which selector is associate with that city
+            // Given that there are multiple choices for cities, we need to determine which selector is associated with that city
             // Here, we can just iterate through the custom-options class and then return the selector index that matches the child index
-            const getSelector = await page.evaluate( () => {
+            const getSelector = await page.evaluate( (dict) => {
                 let child;
                 const options = [...document.querySelectorAll('.custom-option')]
 
                 for(let i = 0; i < options.length; i++) {
-                    if(options[i].innerHTML.toLowerCase() === 'london') child = i+1
+                    if(options[i].innerHTML.toLowerCase() === dict.city.toLowerCase()) child = i+1
     
                 }
                 
                 return `#content-section > div > div > div > span:nth-child(${child})`
-            })
+            }, dictObj)
 
             await page.waitForTimeout(4000)
             
