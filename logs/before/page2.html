@@ -1,20 +1,24 @@
-<html nate-visible="true"><head nate-visible="true">
-    <title nate-visible="true">Page 2</title>
-    <link rel="stylesheet" href="./css/styles.css" nate-visible="true">
-    <script type="text/javascript" src="./lib/jquery.js" nate-visible="true"></script>
-    <script type="text/javascript" src="./lib/index.js" nate-visible="true"></script>
+<html><head>
+    <title>Page 2</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script type="text/javascript" src="./lib/jquery.js"></script>
+    <script type="text/javascript" src="./lib/index.js"></script>
 </head>
 
-<body nate-visible="true">
+<body>
 
-    <h1 nate-visible="true">Page 2</h1>
-    <section id="time-container" nate-visible="true"><span nate-visible="true">milliseconds since 1 January 1970: 1610498940542</span></section>
-    <section id="loading-msg" hidden=""></section>
-    <section id="content-section" nate-visible="true">
-        <input type="button" id="next-page-btn" onclick="location.href='./page3.html'" value="Next page" disabled="" nate-visible="true">
-        <div class="custom-select-wrapper" nate-visible="true"><select name="sources" id="sources" class="custom-select" style="display: none;"><option value="London" nate-visible="true">London</option><option value="New YorkS" nate-visible="true">Amsterdam</option><option value="New York" nate-visible="true">New York</option></select><div class="custom-select" nate-visible="true"><span class="custom-select-trigger" nate-visible="true">City</span><div class="custom-options" nate-visible="true"><span class="custom-option undefined" data-value="London" nate-visible="true">London</span><span class="custom-option undefined" data-value="New YorkS" nate-visible="true">Amsterdam</span><span class="custom-option undefined" data-value="New York" nate-visible="true">New York</span></div></div></div>
+    <h1>Page 2</h1>
+    <section id="time-container"><span>milliseconds since 1 January 1970: 1610499614120</span></section>
+    <section id="loading-msg" hidden="">Loading...</section>
+    <section id="content-section">
+        <input type="button" id="next-page-btn" onclick="location.href='./page3.html'" value="Next page" disabled="">
+        <div class="custom-select-wrapper"><select name="sources" id="sources" class="custom-select" style="display: none;">
+            <option value="London">London</option>
+            <option value="New YorkS">Amsterdam</option>
+            <option value="New York">New York</option>
+        </select><div class="custom-select"><span class="custom-select-trigger">City</span><div class="custom-options"><span class="custom-option undefined" data-value="London">London</span><span class="custom-option undefined" data-value="New YorkS">Amsterdam</span><span class="custom-option undefined" data-value="New York">New York</span></div></div></div>
     </section>
-    <script nate-visible="true">
+    <script>
         updateTime();
         function updateTime() {
             const container = document.getElementById('time-container');

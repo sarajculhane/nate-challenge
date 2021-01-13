@@ -78,3 +78,14 @@ const hidePopUp = async (page) => {
      hidePopUp,
      completeForm
  }
+
+   //       Object.keys(dict).filter((key) => key !== 'gender' && key!=='password' ).forEach(async (key) => 
+    //       {await page.type(`#${key}`, dict[key], {delay: 500})
+          
+    //         await page.evaluate((key) => 
+    //         {
+    //         console.log(key)
+    //         document.querySelector(`#${key}`).setAttribute('nate-action-type', 'input')
+    //         document.querySelector(`#${key}`).setAttribute('nate-dic-key', `${key}`)
+    //     })
+    // })
