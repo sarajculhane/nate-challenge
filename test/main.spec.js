@@ -17,14 +17,17 @@ describe('Initial Test Set Up - Checking basic execution', () => {
   let sandbox;
   let page;
   let browser;
-  beforeEach(async () => {
+  let spy = sinon.spy(console, 'log')
+  before(async () => {
     browser = await puppeteer.launch();
     page = await browser.newPage();
     await page.goto('https://nate-eu-west-1-prediction-test-webpages.s3-eu-west-1.amazonaws.com/tech-challenge/page1.html');
+    
   })
 
-  afterEach(async () => {
+  after(async () => {
     await page.close
+    
   })
 
 describe('Page One Execution', async () => {
@@ -42,37 +45,40 @@ describe('Page One Execution', async () => {
     button = await page.waitForSelector(buttonSelector)
     await button.click()
     
-    // done()
     })
-
-    // it('The "Start" button is has nate-action-type attribute', async() => {
-    //   let buttonSelector = 'input[type=button]'
-      
-    //   button = await page.waitForSelector(buttonSelector)
-    //   await button.click()
-
-    //   })
 
     })
 
     describe( 'Page Two Execution', () => {
       let pageTwo;
-      it('The city selection page loads', async (done) => {
-        // await page.waitForTimeout(5000)
-        await page.waitForSelector('#time-container').done()
-        // expect(pageTwo).to.include('miliseconds')
-        // let timeSelector = '#time-container'
-        // await page.waitForSelector(buttonSelector)
-        
-        // dropdown = await page.waitForSelector(dropdownSelector)
-        // await dropdown.click().done()
-      }).timeout(10000)
+      let sandbox;
+      it('The city selection page loads the selection dropdown', async () => {
+        // await page.waitForRequest('https://nate-eu-west-1-prediction-test-webpages.s3-eu-west-1.amazonaws.com/tech-challenge/page2.html')
+        await page.waitForTimeout(15000)
+      }).timeout(0)
 
-      // it('The city selection dropdown is clicked', async () => {
-      //   let dropdownSelector = '.custom-select-trigger'
-      //   await page.waitForTimeout(10000)
-      //   dropdown = await page.waitForSelector(dropdownSelector)
-      //   await dropdown.click().done()
-      // })
+      it('The city selection dropdown is clicked', async () => {
+        let dropdownSelector = '.custom-select-trigger'
+
+        dropdown = await page.waitForSelector(dropdownSelector)
+        await dropdown.click()
+      }).timeout(0)
+
+
+      it('The correct city selection is made', async () => {
+        let selection = dictObj.city
+        let citySelector = '#content-section > div > div > div > span:nth-child(1)'
+        await page.waitForTimeout(5000)
+        // console.log('london clicked')
+        expect(spy.called).to.be.true
+        spy.restore()
+      }).timeout(0)
+
+
+      it('The Next button is clicked', async () => {
+        await page.click('#next-page-btn')
+      }).timeout(0)
+
     })
   })
+

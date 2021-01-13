@@ -3,7 +3,7 @@ const fs = require ('fs')
 const selectCity = async (page, dict) => {
     try {
         const selectClick= '.custom-select-trigger' // a click on this element will trigger the drop down menu
-        await page.waitForTimeout(15000) // page takes a long time to load so adding a timeout before executing script further
+        await page.waitForTimeout(15500) // page takes a long time to load so adding a timeout before executing script further
         // await page.evaluate(() => flagVisible())
         fs.writeFileSync('logs/before/page2.html', await page.content()) // logging before state as in page1
         // click on the element and set the correct nate-action-type
@@ -24,9 +24,8 @@ const selectCity = async (page, dict) => {
             return `#content-section > div > div > div > span:nth-child(${child})`  
         }, dict)
 
-        await page.waitForTimeout(4000)
-        
-        await page.click(getSelector).then((e) => console.log('london clicked')).then(() => page.evaluate(() => {
+        await page.waitForTimeout(5000)
+        await page.click(getSelector).then((e) => console.log(`${dict.city} clicked`)).then(() => page.evaluate(() => {
             let selector = document.querySelector('.custom-select-trigger')
             selector.setAttribute('nate-action-type', 'click')
             selector.setAttribute('nate-dic-key', 'city')
