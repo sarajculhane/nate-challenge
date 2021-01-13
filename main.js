@@ -1,9 +1,5 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs')
-// const selectButton = require('./modules/page1')
-// const selectCity = require('./modules/page2')
-// const {hidePopUp, completeForm} = require('./modules/page3')
-
 const {selectButton, selectCity, hidePopUp, completeForm} = require('./modules')
 
 const dictObj = {
