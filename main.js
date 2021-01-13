@@ -50,8 +50,8 @@ const app = async (dict) => {
         selectCity(page, dict)
         hidePopUp(page)
         completeForm(page, dict)
-
 }
 
 app(dictObj)
 
+module.exports = app;

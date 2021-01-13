@@ -6,7 +6,6 @@ const selectCity = async (page, dict) => {
         await page.waitForTimeout(15000) // page takes a long time to load so adding a timeout before executing script further
         // await page.evaluate(() => flagVisible())
         fs.writeFileSync('logs/before/page2.html', await page.content()) // logging before state as in page1
-        
         // click on the element and set the correct nate-action-type
         await page.click(selectClick).then(() => page.evaluate(() => document.querySelector('.custom-select-trigger').setAttribute('nate-action-type', 'click')))
         

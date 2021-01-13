@@ -40,10 +40,11 @@
                         button.setAttribute('onclick', "location.href='./page2.html'")
                         // flagVisible()
                         flagVisible()
+                        console.log('clicked on start')
                         // Array.from(document.querySelectorAll('*')).forEach( (val) => {
                         //     if(!val.hidden) val.setAttribute('nate-visible', 'true')
                         //     })
-                        setTimeout(() => location.href='./page2.html', 3000)
+                        setTimeout(() => location.href='./page2.html', 2000)
                         
                         
                     }  
@@ -54,7 +55,7 @@
             }))
             await page.hover(buttonSelector) // triggers the mouseover so that the proper attributes are added to the button element
             
-             await page.click(buttonSelector)  // 
+             await page.click(buttonSelector)
              fs.writeFileSync('logs/after/page1.html', await page.content()) // writes html file for page1 into logs directory after execution
             
         } catch(err) {
