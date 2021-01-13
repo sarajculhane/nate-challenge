@@ -17,7 +17,12 @@ const app = async (dict) => {
 
     const flagVisible = async () => await page.evaluate( () => {
         Array.from(document.querySelectorAll('*')).forEach( (val) => {
-            if(val.style.display !== 'none') val.setAttribute('nate-visible', 'true')
+            
+            if(val.style.display === 'none' || val.hidden) 
+            {
+                val.childNodes.forEach((child) => child.remove('nate-visible'))
+
+            } else val.setAttribute('nate-visible', 'true')
             })
     })
 
