@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer')
 const sinon = require('sinon')
 const app = require('../main')
 const fs = require('fs')
+const {hidePopUp, completeForm} = require('../modules')
 
 
 const dictObj = {
@@ -39,7 +40,7 @@ describe('Page One Execution', async () => {
     expect(button).to.exist
 
     })
-    it('The "Start" button is clicked', async() => {
+  it('The "Start" button is clicked', async() => {
     let buttonSelector = 'input[type=button]'
     
     button = await page.waitForSelector(buttonSelector)
@@ -79,6 +80,18 @@ describe('Page One Execution', async () => {
         await page.click('#next-page-btn')
       }).timeout(0)
 
+    })
+
+    describe( 'Page Three Execution', () => {
+      let popup;
+      it('Pop up is hidden', async () => {
+        let selector = '#popup'
+        hidePopUp()
+      }).timeout(0)
+
+      it('The Form is successfully submitted', async () => {
+        completeForm()
+      }).timeout(0)
     })
   })
 

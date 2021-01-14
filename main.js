@@ -25,9 +25,11 @@ Notes
 
 const app = async (dict) => {
     // Launch Chrome/Chromium instance with Puppeteer and go to page one
+    const entry = 'https://nate-eu-west-1-prediction-test-webpages.s3-eu-west-1.amazonaws.com/tech-challenge/page1.html'
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
-    await page.goto('https://nate-eu-west-1-prediction-test-webpages.s3-eu-west-1.amazonaws.com/tech-challenge/page1.html');
+    await page.goto(entry);
+    const getCSS = await page.evaluate(() => document.querySelector('link').href)
 
     const flagVisible = async () => await page.evaluate( () => {
         Array.from(document.querySelectorAll('*')).forEach( (val) => {
@@ -45,11 +47,15 @@ const app = async (dict) => {
         await page.exposeFunction("selectCity", selectCity)
         await page.exposeFunction("hidePopUp", hidePopUp)
         await page.exposeFunction("completeForm", completeForm)
-
         selectButton(page)
         selectCity(page, dict)
         hidePopUp(page)
         completeForm(page, dict)
+
+        return {
+            getCSS
+        }
+
 }
 
 app(dictObj)
