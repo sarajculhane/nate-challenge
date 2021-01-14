@@ -17,7 +17,9 @@ Similarly, I used Mocha/Chai because I have some exposure to them previously.
 
 ### Run and Testing
 
-To run the application and the associated tests:
+Given the requirements, I thought the most important thing to test would be the application's ability to run with valid key-value pairs aside from what was provides.  While my test has several different specs, it is intended just to show this.  Although this test is fairly straightforward, I think that other possible tests like ensuring that the `nate-action-type` and `nate-dict-type` are present would be cumbersome for something that can be shown by looking at the changes in the logs.
+
+To run the application or the associated tests:
 
 ```
 npm install

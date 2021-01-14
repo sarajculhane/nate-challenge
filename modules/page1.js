@@ -8,7 +8,7 @@
             const buttonSelector = 'input[type=button]' // the selector for the target button
         
             await page.evaluate(  () => {
-                flagVisible()
+                // flagVisible()
                 // Array.from(document.querySelectorAll('*')).forEach( (val) => {
                 //     if(!val.hidden) val.setAttribute('nate-visible', 'true')
                 //     })
@@ -39,7 +39,7 @@
                         button.setAttribute('nate-action-type', 'click')
                         button.setAttribute('onclick', "location.href='./page2.html'")
                         // flagVisible()
-                        flagVisible()
+                        // flagVisible()
                         console.log('clicked on start')
                         // Array.from(document.querySelectorAll('*')).forEach( (val) => {
                         //     if(!val.hidden) val.setAttribute('nate-visible', 'true')

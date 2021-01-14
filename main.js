@@ -10,18 +10,6 @@ const dictObj = {
     gender: "female"
 }
 
-/*
-Notes
-
-- Need to figure out how to set attribute with click on the submit
-- Make sure to append all keys to the respective elements
-- Add comments into code
-- Valid with different values
-- Simplify / modulate code where possible
-
-*/
-
-
 
 const app = async (dict) => {
     // Launch Chrome/Chromium instance with Puppeteer and go to page one
@@ -29,20 +17,7 @@ const app = async (dict) => {
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
     await page.goto(entry);
-    const getCSS = await page.evaluate(() => document.querySelector('link').href)
 
-    const flagVisible = async () => await page.evaluate( () => {
-        Array.from(document.querySelectorAll('*')).forEach( (val) => {
-            
-            if(val.style.display === 'none' || val.hidden) 
-            {
-                val.childNodes.forEach((child) => child.remove('nate-visible'))
-
-            } else val.setAttribute('nate-visible', 'true')
-            })
-    })
-
-        await page.exposeFunction("flagVisible", flagVisible)
         await page.exposeFunction("selectButton", selectButton)
         await page.exposeFunction("selectCity", selectCity)
         await page.exposeFunction("hidePopUp", hidePopUp)
@@ -51,10 +26,6 @@ const app = async (dict) => {
         selectCity(page, dict)
         hidePopUp(page)
         completeForm(page, dict)
-
-        return {
-            getCSS
-        }
 
 }
 
