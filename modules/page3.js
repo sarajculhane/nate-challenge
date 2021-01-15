@@ -62,7 +62,12 @@ const hidePopUp = async (page) => {
                  if(!box.checked && box.value === dict.gender) box.checked = true
                  if(box.checked && box.value !== dict.gender) box.checked = false
              }
-         }, dict).then(() => page.evaluate(() => document.querySelector('input[class=form-check]').setAttribute('nate-action-type', 'checked')))
+         }, dict).then(() => page.evaluate(() => {
+             
+            document.querySelector('input[class=form-check]').setAttribute('nate-action-type', 'checked')
+            document.querySelector('input[class=form-check]').setAttribute('nate-dict-key', 'gender')
+         })
+            )
 
          // await page.evaluate(() => flagVisible())
          fs.writeFileSync('logs/after/page3.html', await page.content())
@@ -78,14 +83,3 @@ const hidePopUp = async (page) => {
      hidePopUp,
      completeForm
  }
-
-   //       Object.keys(dict).filter((key) => key !== 'gender' && key!=='password' ).forEach(async (key) => 
-    //       {await page.type(`#${key}`, dict[key], {delay: 500})
-          
-    //         await page.evaluate((key) => 
-    //         {
-    //         console.log(key)
-    //         document.querySelector(`#${key}`).setAttribute('nate-action-type', 'input')
-    //         document.querySelector(`#${key}`).setAttribute('nate-dic-key', `${key}`)
-    //     })
-    // })
