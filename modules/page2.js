@@ -1,10 +1,12 @@
 const fs = require ('fs')
 
+// Page Two Automation
+
 const selectCity = async (page, dict) => {
     try {
         const selectClick= '.custom-select-trigger' // a click on this element will trigger the drop down menu
         await page.waitForTimeout(15500) // page takes a long time to load so adding a timeout before executing script further
-        // await page.evaluate(() => flagVisible())
+
         fs.writeFileSync('logs/before/page2.html', await page.content()) // logging before state as in page1
         // click on the element and set the correct nate-action-type
         await page.click(selectClick).then(() => page.evaluate(() => document.querySelector('.custom-select-trigger').setAttribute('nate-action-type', 'click')))
@@ -34,11 +36,10 @@ const selectCity = async (page, dict) => {
 
         
         }))
-        // await page.evaluate(() => flagVisible())
         fs.writeFileSync('logs/after/page2.html', await page.content()) // logging
         await page.click('#next-page-btn')
     } catch(err) {
-        console.log(err, 'select error')
+        console.log('page 2 erro',err)
     }
 
 }

@@ -7,12 +7,6 @@
             await page.waitForTimeout(1000) // ensure page is fully loaded 
             const buttonSelector = 'input[type=button]' // the selector for the target button
         
-            await page.evaluate(  () => {
-                // flagVisible()
-                // Array.from(document.querySelectorAll('*')).forEach( (val) => {
-                //     if(!val.hidden) val.setAttribute('nate-visible', 'true')
-                //     })
-            })
                 
             fs.writeFileSync('logs/before/page1.html', await page.content()) // writes html file for page1 into logs directory prior to execution
             
@@ -38,12 +32,6 @@
                     const onClick = () => {
                         button.setAttribute('nate-action-type', 'click')
                         button.setAttribute('onclick', "location.href='./page2.html'")
-                        // flagVisible()
-                        // flagVisible()
-                        console.log('clicked on start')
-                        // Array.from(document.querySelectorAll('*')).forEach( (val) => {
-                        //     if(!val.hidden) val.setAttribute('nate-visible', 'true')
-                        //     })
                         setTimeout(() => location.href='./page2.html', 2000)
                         
                         
@@ -59,7 +47,7 @@
              fs.writeFileSync('logs/after/page1.html', await page.content()) // writes html file for page1 into logs directory after execution
             
         } catch(err) {
-            console.log('the error', err)
+            console.log('page 1 error', err)
         }
     }
 

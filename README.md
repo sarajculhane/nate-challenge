@@ -27,3 +27,7 @@ npm start
 npm test
 ```
 
+### Logs
+
+Additionally, the `logs` directory stores the full html of each page before and after the execution actions. 
+

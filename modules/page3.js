@@ -1,5 +1,8 @@
 const fs = require ('fs')
 
+// Page 3 Automation
+
+// Hides pop-up from view by setting the css attribute display to be none
 const hidePopUp = async (page) => {
     try {
          await page.waitForSelector('#popup').then(() => page.evaluate(() => {
@@ -12,8 +15,6 @@ const hidePopUp = async (page) => {
 
 }
 
-
-
  // Complete Form Function will fill out the form with the data from the dictionary object
 
  /*
@@ -23,7 +24,7 @@ const hidePopUp = async (page) => {
  const completeForm = async (page,dict) => {
      try{
          await page.waitForSelector('#name')
-         // await page.evaluate(() => flagVisible() // wait for form selector to appear
+
          fs.writeFileSync('logs/before/page3.html', await page.content())
 
          await page.type('#name', dict.name, {delay: 100}).then(() => page.evaluate(() => 
@@ -75,7 +76,7 @@ const hidePopUp = async (page) => {
 
 
      } catch(err) {
-         console.log('form err', err)
+         console.log('page 3 err', err)
      }
  }
 

@@ -18,14 +18,16 @@ const app = async (dict) => {
     const page = await browser.newPage();
     await page.goto(entry);
 
-        await page.exposeFunction("selectButton", selectButton)
-        await page.exposeFunction("selectCity", selectCity)
-        await page.exposeFunction("hidePopUp", hidePopUp)
-        await page.exposeFunction("completeForm", completeForm)
-        selectButton(page)
-        selectCity(page, dict)
-        hidePopUp(page)
-        completeForm(page, dict)
+    // page.exposeFunction always globally defined functions to run within Puppeteer
+    // Thus, need to expose the functions imported from the modules in order to run the app
+    await page.exposeFunction("selectButton", selectButton)
+    await page.exposeFunction("selectCity", selectCity)
+    await page.exposeFunction("hidePopUp", hidePopUp)
+    await page.exposeFunction("completeForm", completeForm)
+    selectButton(page)
+    selectCity(page, dict)
+    hidePopUp(page)
+    completeForm(page, dict)
 
 }
 
