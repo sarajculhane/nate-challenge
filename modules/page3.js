@@ -1,5 +1,5 @@
 const fs = require ('fs')
-
+const deltaLog = require('./deltaLog')
 // Page 3 Automation
 
 // Hides pop-up from view by setting the css attribute display to be none
@@ -68,10 +68,12 @@ const hidePopUp = async (page) => {
             document.querySelector('input[class=form-check]').setAttribute('nate-action-type', 'checked')
             document.querySelector('input[class=form-check]').setAttribute('nate-dict-key', 'gender')
          })
-            )
-
-         // await page.evaluate(() => flagVisible())
-         fs.writeFileSync('logs/after/page3.html', await page.content())
+            ).then(async () => { // logging
+                fs.writeFileSync('logs/after/page3.html', await page.content())
+                deltaLog('page3')
+           
+            })
+            
          await page.click('#btn').then(() => page.evaluate(() => document.querySelector('#bth')))
 
 

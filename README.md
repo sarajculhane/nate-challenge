@@ -10,6 +10,8 @@ The following technologies were used primarily:
 - **Puppeteer** (Node library and Web automation API that works with Node & Chronium)
 - **Mocha/Chai**  (Testing)
 
+The NPM packages `Diff` and `colors` were also used for logging. 
+
 
 I chose these technologies because of my familarity with JS/Node and used Puppeteer because of it's compatibility with Node and Chrome developer tools. While this was my first time using Puppeteer and I have not tried other popular automation tools, I feel that it's APIs were more than sufficient for the required tasks and appreciated the ease of integrating with my chosen environment. 
 
@@ -27,7 +29,9 @@ npm start
 npm test
 ```
 
-### Logs
+### Change Logs
 
-Additionally, the `logs` directory stores the full html of each page before and after the execution actions. 
+The `logs` directory stores the full html representation of each page before and after the execution actions. Additionally, the delta between the before and after of each file is logged to the console with color coded detail in Node once the after file is generated (by line). As noted in the tech stack section, two npm packages, `Diff` and `colors` where used to accomplish this. Example of this shown below for page 1 (red is removed/edited line and green added/edited):
+
+![ScreenShot](/logs/example-log.png)
 

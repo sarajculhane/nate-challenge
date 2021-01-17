@@ -1,11 +1,12 @@
-const fs = require ('fs')
+const fs = require('fs')
+const deltaLog = require('./deltaLog')
 
 // Page Two Automation
 
 const selectCity = async (page, dict) => {
     try {
         const selectClick= '.custom-select-trigger' // a click on this element will trigger the drop down menu
-        await page.waitForTimeout(15500) // page takes a long time to load so adding a timeout before executing script further
+        await page.waitForTimeout(16000) // page takes a long time to load so adding a timeout before executing script further
 
         fs.writeFileSync('logs/before/page2.html', await page.content()) // logging before state as in page1
         // click on the element and set the correct nate-action-type
@@ -35,11 +36,15 @@ const selectCity = async (page, dict) => {
             // add the necessary attributes for 'action-type' / 'dic-type'  
 
         
-        }))
-        fs.writeFileSync('logs/after/page2.html', await page.content()) // logging
+        })).then(async () => { // logging
+            fs.writeFileSync('logs/after/page2.html', await page.content())
+            deltaLog('page2')
+       
+        })
+        
         await page.click('#next-page-btn')
     } catch(err) {
-        console.log('page 2 erro',err)
+        console.log('page 2 error',err)
     }
 
 }

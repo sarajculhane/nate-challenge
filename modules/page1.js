@@ -1,5 +1,5 @@
-   const fs = require('fs') 
-    
+   const fs = require('fs')
+   const deltaLog = require('./deltaLog')
     // Page One Automation
 
     const selectButton = async (page) => {
@@ -41,14 +41,21 @@
                 }
                 )
             }))
+            
             await page.hover(buttonSelector) // triggers the mouseover so that the proper attributes are added to the button element
             
-             await page.click(buttonSelector)
-             fs.writeFileSync('logs/after/page1.html', await page.content()) // writes html file for page1 into logs directory after execution
+            await page.click(buttonSelector).then(async () => {
+                fs.writeFileSync('logs/after/page1.html', await page.content())
+                   deltaLog('page1')
+           
+            })
+            //  page.waitForTimeout(100).then(() => deltaLog())
+            // writes html file for page1 into logs directory after execution
             
+             
         } catch(err) {
             console.log('page 1 error', err)
         }
     }
 
-    module.exports = selectButton
+    module.exports = selectButton;
