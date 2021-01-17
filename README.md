@@ -12,13 +12,13 @@ The following technologies were used primarily:
 The NPM packages `Diff` and `colors` were also used for logging of changes between pages after execution. 
 
 
-I chose these technologies because of my familarity with JS/Node and used Puppeteer because of its compatibility with Node and Chrome developer tools. While this was my first time using Puppeteer and I have yet to try most other popular automation tools, I feel that it's APIs were more than sufficient for the required tasks and appreciated the ease of integrating with my chosen environment. 
+I chose these technologies because of my familarity with JS/Node and used Puppeteer because of its compatibility with Node and Chrome developer tools. While this was my first time using Puppeteer and I have yet to try most other popular automation tools, I feel that its APIs were more than sufficient for the required tasks and appreciated the ease of integrating with my chosen environment. 
 
 Similarly, I used Mocha/Chai because I have some exposure to them previously. 
 
 ### Testing
 
-Given the requirements, I thought it would be most important to test application's ability to run End to End, particularly while using differet valid key-value pairs than what was provided. While my test a handful of different specs, its primary intent is to simply show the successful navigation, not to test at a granular level. Although these tests are fairly straightforward, I feel that the logging provided makes up for any gaps, eg. they demonstrate that the `nate-action-type` and `nate-dict-type` have be added as required even though the tests do not.
+Given the requirements, I thought it would be most important to test application's ability to run End to End, particularly while using differet valid key-value pairs than what was provided. While my test a handful of different specs, its primary intent is to simply show the successful navigation, not to test at a granular level. Although these tests are fairly straightforward, I feel that the logging provided makes up for any gaps, eg. the logs demonstrate that the `nate-action-type` and `nate-dict-type` have be added as required even though the tests do not.
 
 
 
