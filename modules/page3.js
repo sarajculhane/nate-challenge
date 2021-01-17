@@ -2,7 +2,7 @@ const fs = require ('fs')
 const deltaLog = require('./deltaLog')
 // Page 3 Automation
 
-// Hides pop-up from view by setting the css attribute display to be none
+// Hides pop-up from view by setting the css style attribute display to be none
 const hidePopUp = async (page) => {
     try {
          await page.waitForSelector('#popup').then(() => page.evaluate(() => {

@@ -19,9 +19,9 @@
             we do not want to the redirect to page 2 to occur until after these two things have happened. The following changes prevent this:
 
             - Remove the onclick attribute on the button temporarily
-            - Add an event listener that changes the button's onclick attribute on mouseover 
-                onclick which will 
-                1) Add the `nate-action-type` 
+            - Add an event listener that changes the button's onclick attribute on mouseover to be a function
+                that will : 
+                1) Add the `nate-action-type` to the DOM element
                 2) Set the onclick attribute to the target location again
                 3) Set location directly so it redirects on first click
             */
@@ -44,7 +44,7 @@
             
             await page.hover(buttonSelector) // triggers the mouseover so that the proper attributes are added to the button element
             
-            await page.click(buttonSelector).then(async () => { // click on button selector
+            await page.click(buttonSelector).then(async () => { // click on button selector to go to next page
                 fs.writeFileSync('logs/after/page1.html', await page.content())
                    deltaLog('page1')
            
