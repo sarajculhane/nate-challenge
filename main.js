@@ -18,7 +18,7 @@ const app = async (dict) => {
     const page = await browser.newPage();
     await page.goto(entry);
 
-    // page.exposeFunction always globally defined functions to run within Puppeteer
+    // page.exposeFunction allows globally defined functions to run within Puppeteer
     // Thus, need to expose the functions imported from the modules in order to run the app
     await page.exposeFunction("selectButton", selectButton)
     await page.exposeFunction("selectCity", selectCity)

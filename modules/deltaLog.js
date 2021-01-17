@@ -2,14 +2,14 @@ require('colors')
 const Diff = require('diff')
 const fs = require('fs')
 
-// This `deltaLog` function adds console logging of difference 
+// This `deltaLog` function adds logging of differences directly in Node console
 // in the html output between each line before and after each execution
 
 
 const deltaLog = async (page) => {
 
     try {
-      // File path to read
+      // File path to read from
       let fileBefore = `./logs/before/${page}.html` 
       let fileAfter = `./logs/after/${page}.html`
 
@@ -19,9 +19,9 @@ const deltaLog = async (page) => {
 
       // use `Diff` npm package (https://www.npmjs.com/package/diff) 
       // and `colors` (https://www.npmjs.com/package/colors) to get difference in files and add color code
-      // green shows modification of a line from the after file
-      // red shows original line from the before file
-      // grey shows unchanged lines
+      // Green shows modification of a line from the after file
+      // Red shows original line from the before file
+      // Grey shows unchanged lines
 
       const change = Diff.diffLines(before, after)
         change.forEach((line) => {
