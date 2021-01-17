@@ -2,8 +2,8 @@ require('colors')
 const Diff = require('diff')
 const fs = require('fs')
 
-// This `deltaLog` function adds logging of differences directly in Node console
-// in the html output between each line before and after each execution
+// This `deltaLog` function adds logging of differences in the HTML output directly in Node console
+// for each page by line before and after every execution
 
 
 const deltaLog = async (page) => {

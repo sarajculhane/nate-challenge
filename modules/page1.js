@@ -51,7 +51,7 @@
             })
             // Logging (true on all pages)
             // 1) Writes html file for page1 into `logs/after` directory
-            // 2) The `deltaLog` function logs the delta in lines to the console after execution
+            // 2) The `deltaLog` function then logs the delta in lines between before/after files to the console after execution
             
              
         } catch(err) {
